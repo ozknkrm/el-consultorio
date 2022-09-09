@@ -58,4 +58,28 @@ class Coders{
     public function getDate_time(){
         return $this->date_time;
     }
+
+    public function findById($id){
+        $query = $this->database->mysql->query("SELECT * FROM `{$this->table}` WHERE `id` = {$id}");
+        $result = $query->fetchAll();
+        
+        return new Coders($result[0]['id'], $result[0]['coder'], $result[0]['issue'], $result[0]['date_time']);
+    }
+
+    public function destroy(){
+        $query = $this->database->mysql->query("DELETE FROM `{$this->table}` WHERE `{$this->table}`.`id` ={$this->id}");
+    }
+
+    public function save(){
+        $query = $this->database->mysql->query("INSERT INTO `{$this->table}` (`coder`,`issue`) VALUES('$this->coder','$this->issue');"); 
+    }
+
+    public function rename($coder,$issue){
+        $this->coder = $coder;
+        $this->issue = $issue;
+    }
+
+    public function update(){
+        $this->database->mysql->query("UPDATE `{$this->table}` SET `coder` = '{$this->coder}', `issue` = '{$this->issue}' WHERE `ID` = {$this->id}");
+    }
 }
